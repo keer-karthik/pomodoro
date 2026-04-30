@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" fill="#2D4721">
+  <!-- Stylized palm/monstera leaf -->
+  <path d="M50 5
+    Q 45 25, 25 35
+    Q 35 35, 35 50
+    Q 25 45, 10 55
+    Q 30 55, 35 70
+    Q 25 70, 15 85
+    Q 35 75, 45 95
+    L 50 115
+    L 55 95
+    Q 65 75, 85 85
+    Q 75 70, 65 70
+    Q 70 55, 90 55
+    Q 75 45, 65 50
+    Q 65 35, 75 35
+    Q 55 25, 50 5
+    Z"/>
+  <!-- Center stem -->
+  <path d="M50 20 L50 110" stroke="#2D4721" stroke-width="3" fill="none"/>
+  <!-- Leaf veins -->
+  <path d="M50 35 Q 40 40, 30 38" stroke="#2D4721" stroke-width="1.5" fill="none"/>
+  <path d="M50 50 Q 38 55, 22 52" stroke="#2D4721" stroke-width="1.5" fill="none"/>
+  <path d="M50 65 Q 40 72, 25 75" stroke="#2D4721" stroke-width="1.5" fill="none"/>
+  <path d="M50 35 Q 60 40, 70 38" stroke="#2D4721" stroke-width="1.5" fill="none"/>
+  <path d="M50 50 Q 62 55, 78 52" stroke="#2D4721" stroke-width="1.5" fill="none"/>
+  <path d="M50 65 Q 60 72, 75 75" stroke="#2D4721" stroke-width="1.5" fill="none"/>
+</svg>
