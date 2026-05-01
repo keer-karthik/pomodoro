@@ -134,6 +134,25 @@ function Timer({ totalSessions, sessionDuration, onSessionEnd, onAllComplete, on
         />
       )}
 
+      {isComplete && (
+        <div className="break-overlay complete-overlay">
+          <div className="break-content">
+            <div className="break-timer">{totalSessions}</div>
+            <span className="break-session-label">sessions done.</span>
+            <p className="break-message">look at you go.</p>
+          </div>
+          <span
+            className="break-continue clickable"
+            onClick={onReset}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === 'Enter' && onReset()}
+          >
+            go again?
+          </span>
+        </div>
+      )}
+
       <div className="timer-section">
         <div className="timer-blocks">
           {Array.from({ length: totalSessions }, (_, index) => (
@@ -172,19 +191,6 @@ function Timer({ totalSessions, sessionDuration, onSessionEnd, onAllComplete, on
           </div>
         )}
 
-        {isComplete && (
-          <div className="timer-complete">
-            <span
-              className="clickable"
-              onClick={onReset}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => e.key === 'Enter' && onReset()}
-            >
-              all sessions complete — start again?
-            </span>
-          </div>
-        )}
       </div>
     </>
   );

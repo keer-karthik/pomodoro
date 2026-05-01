@@ -410,6 +410,10 @@ body {
   margin-top: 3rem;
 }
 
+.complete-overlay {
+  background-color: var(--color-green);
+}
+
 .break-continue {
   position: absolute;
   bottom: 4rem;
