@@ -137,9 +137,7 @@ function Timer({ totalSessions, sessionDuration, onSessionEnd, onAllComplete, on
       {isComplete && (
         <div className="break-overlay complete-overlay">
           <div className="break-content">
-            <div className="break-timer">{totalSessions}</div>
-            <span className="break-session-label">sessions done.</span>
-            <p className="break-message">look at you go.</p>
+            <p className="break-message">look at you go!</p>
           </div>
           <span
             className="break-continue clickable"
