@@ -110,6 +110,11 @@ body {
   min-height: calc(100vh - 80px);
 }
 
+.main-screen.hidden,
+.hidden {
+  display: none;
+}
+
 .timer-section {
   flex: 0 0 60%;
   padding: 4rem;
@@ -717,6 +722,49 @@ body {
   margin-top: 1rem;
   font-size: 0.875rem;
   color: var(--color-plum);
+}
+
+/* World Clock */
+.world-clock-weather {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  color: var(--color-cream);
+  margin-bottom: 2rem;
+}
+
+.world-clock-location {
+  font-size: 0.9rem;
+  opacity: 0.6;
+  margin-bottom: 0.25rem;
+}
+
+.world-clock-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.world-clock-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(253, 251, 202, 0.1);
+}
+
+.world-clock-time {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-cream);
+  min-width: 90px;
+}
+
+.world-clock-label {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--color-cream);
+  opacity: 0.6;
 }
 
 /* Mode Toggle */

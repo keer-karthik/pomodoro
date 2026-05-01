@@ -1,12 +1,52 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 
+const STORAGE_KEY = 'pomodoro-timer-state';
+
+function loadSaved(totalSessions, sessionDuration) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (saved && saved.totalSessions === totalSessions && saved.sessionDuration === sessionDuration) {
+      let { timeRemaining, currentSession, isRunning, isComplete, isSessionComplete, savedAt } = saved;
+      if (isRunning) {
+        const elapsed = Math.floor((Date.now() - savedAt) / 1000);
+        timeRemaining = Math.max(0, timeRemaining - elapsed);
+        if (timeRemaining === 0) isRunning = false;
+      }
+      return { timeRemaining, currentSession, isRunning, isComplete, isSessionComplete };
+    }
+  } catch {}
+  return null;
+}
+
 export function useTimer(totalSessions, sessionDuration, onSessionEnd, onAllComplete) {
-  const [currentSession, setCurrentSession] = useState(0);
-  const [timeRemaining, setTimeRemaining] = useState(sessionDuration * 60);
-  const [isRunning, setIsRunning] = useState(false);
-  const [isComplete, setIsComplete] = useState(false);
-  const [isSessionComplete, setIsSessionComplete] = useState(false);
+  const [currentSession, setCurrentSession] = useState(
+    () => loadSaved(totalSessions, sessionDuration)?.currentSession ?? 0
+  );
+  const [timeRemaining, setTimeRemaining] = useState(
+    () => loadSaved(totalSessions, sessionDuration)?.timeRemaining ?? sessionDuration * 60
+  );
+  const [isRunning, setIsRunning] = useState(
+    () => loadSaved(totalSessions, sessionDuration)?.isRunning ?? false
+  );
+  const [isComplete, setIsComplete] = useState(
+    () => loadSaved(totalSessions, sessionDuration)?.isComplete ?? false
+  );
+  const [isSessionComplete, setIsSessionComplete] = useState(
+    () => loadSaved(totalSessions, sessionDuration)?.isSessionComplete ?? false
+  );
   const intervalRef = useRef(null);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      timeRemaining, currentSession, isRunning, isComplete, isSessionComplete,
+      totalSessions, sessionDuration, savedAt: Date.now()
+    }));
+  }, [timeRemaining, currentSession, isRunning, isComplete, isSessionComplete, totalSessions, sessionDuration]);
+
+  // Clear saved state on full unmount (reset), not on "go home" (Timer stays mounted)
+  useEffect(() => {
+    return () => localStorage.removeItem(STORAGE_KEY);
+  }, []);
 
   const clearTimer = useCallback(() => {
     if (intervalRef.current) {
@@ -15,17 +55,7 @@ export function useTimer(totalSessions, sessionDuration, onSessionEnd, onAllComp
     }
   }, []);
 
-  const start = useCallback(() => {
-    setIsRunning(true);
-  }, []);
-
-  const pause = useCallback(() => {
-    setIsRunning(false);
-  }, []);
-
-  const toggle = useCallback(() => {
-    setIsRunning(prev => !prev);
-  }, []);
+  const toggle = useCallback(() => setIsRunning(prev => !prev), []);
 
   const startNextSession = useCallback(() => {
     if (currentSession < totalSessions - 1) {
@@ -35,10 +65,6 @@ export function useTimer(totalSessions, sessionDuration, onSessionEnd, onAllComp
       setIsRunning(false);
     }
   }, [currentSession, totalSessions, sessionDuration]);
-
-  useEffect(() => {
-    setTimeRemaining(sessionDuration * 60);
-  }, [sessionDuration]);
 
   useEffect(() => {
     if (isRunning && !isComplete && !isSessionComplete) {
@@ -63,7 +89,6 @@ export function useTimer(totalSessions, sessionDuration, onSessionEnd, onAllComp
     } else {
       clearTimer();
     }
-
     return clearTimer;
   }, [isRunning, isComplete, isSessionComplete, currentSession, totalSessions, sessionDuration, onSessionEnd, onAllComplete, clearTimer]);
 
@@ -74,15 +99,9 @@ export function useTimer(totalSessions, sessionDuration, onSessionEnd, onAllComp
   }, []);
 
   return {
-    currentSession,
-    timeRemaining,
+    currentSession, timeRemaining,
     formattedTime: formatTime(timeRemaining),
-    isRunning,
-    isComplete,
-    isSessionComplete,
-    start,
-    pause,
-    toggle,
-    startNextSession
+    isRunning, isComplete, isSessionComplete,
+    toggle, startNextSession
   };
 }
