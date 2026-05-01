@@ -1,17 +1,6 @@
 import React from 'react';
-import { useAuth } from '../contexts/AuthContext';
 
-function Header({ onStatsClick, onAuthClick }) {
-  const { user, signOut, supabaseConfigured } = useAuth();
-
-  const handleAuthAction = async () => {
-    if (user) {
-      await signOut();
-    } else {
-      onAuthClick();
-    }
-  };
-
+function Header({ onStatsClick }) {
   return (
     <header className="header">
       <div className="header-left">
@@ -28,17 +17,6 @@ function Header({ onStatsClick, onAuthClick }) {
         >
           Stats
         </span>
-        {supabaseConfigured && (
-          <span
-            className="nav-link clickable"
-            onClick={handleAuthAction}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => e.key === 'Enter' && handleAuthAction()}
-          >
-            {user ? 'Logout' : 'Login'}
-          </span>
-        )}
       </nav>
     </header>
   );

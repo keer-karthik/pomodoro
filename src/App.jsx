@@ -1,19 +1,18 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Header from './components/Header';
 import SetupScreen from './components/SetupScreen';
 import Timer from './components/Timer';
 import TaskList from './components/TaskList';
+import FreeTimer from './components/FreeTimer';
 import Stats from './components/Stats';
-import AuthModal from './components/AuthModal';
 import { useLoginDates } from './hooks/useSupabaseStorage';
 
 function App() {
   const [screen, setScreen] = useState('setup');
+  const [mode, setMode] = useState('structured');
   const [config, setConfig] = useState({ sessions: 3, duration: 25 });
   const [isFlashing, setIsFlashing] = useState(false);
   const [showStats, setShowStats] = useState(false);
-  const [showAuth, setShowAuth] = useState(false);
-  const audioRef = useRef(null);
 
   const { recordLogin } = useLoginDates();
 
@@ -48,9 +47,13 @@ function App() {
     setTimeout(() => setIsFlashing(false), 300);
   }, []);
 
-  const handleStart = (sessions, duration) => {
-    setConfig({ sessions, duration });
-    setScreen('timer');
+  const handleStart = (selectedMode, sessions, duration) => {
+    if (selectedMode === 'free') {
+      setScreen('timer');
+    } else {
+      setConfig({ sessions, duration });
+      setScreen('timer');
+    }
   };
 
   const handleSessionEnd = useCallback(() => {
@@ -69,11 +72,12 @@ function App() {
 
   return (
     <div className={`app ${isFlashing ? 'flash' : ''}`}>
-      <Header onStatsClick={() => setShowStats(true)} onAuthClick={() => setShowAuth(true)} />
-      {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
+      <Header onStatsClick={() => setShowStats(true)} />
       {showStats && <Stats onClose={() => setShowStats(false)} />}
       {screen === 'setup' ? (
-        <SetupScreen onStart={handleStart} />
+        <SetupScreen onStart={handleStart} mode={mode} onModeChange={setMode} />
+      ) : mode === 'free' ? (
+        <FreeTimer onReset={handleReset} />
       ) : (
         <div className="main-screen">
           <Timer

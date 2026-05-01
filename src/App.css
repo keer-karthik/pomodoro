@@ -714,3 +714,133 @@ body {
   font-size: 0.875rem;
   color: var(--color-plum);
 }
+
+/* Mode Toggle */
+.mode-toggle {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.mode-option {
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+.mode-active {
+  color: var(--color-green);
+  font-weight: 600;
+  opacity: 1;
+}
+
+.mode-inactive {
+  color: var(--color-green);
+  opacity: 0.4;
+}
+
+.mode-separator {
+  color: var(--color-green);
+  opacity: 0.4;
+}
+
+/* Free Timer */
+.free-timer-elapsed {
+  margin-bottom: 0;
+}
+
+.free-timer-end {
+  margin-top: 4rem;
+}
+
+.free-timer-end .timer-control-text {
+  opacity: 0.5;
+  font-size: 1rem;
+}
+
+.free-timer-end .timer-control-text:hover {
+  opacity: 1;
+}
+
+/* Session Log */
+.session-log-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.session-log-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.session-log-entry {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--color-green);
+  display: flex;
+  gap: 0.4rem;
+  align-items: baseline;
+}
+
+.session-log-duration {
+  opacity: 0.6;
+}
+
+.session-log-total {
+  margin-top: 2rem;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--color-green);
+  font-weight: 600;
+}
+
+.session-log-empty {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--color-green);
+  opacity: 0.4;
+}
+
+/* Focus Summary Overlay */
+.focus-summary-overlay {
+  align-items: flex-start;
+  padding: 4rem;
+}
+
+.focus-summary-content {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.focus-summary-title {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 3rem;
+  color: var(--color-cream);
+  margin-bottom: 1rem;
+  font-weight: normal;
+}
+
+.focus-summary-stats {
+  font-family: var(--font-body);
+  font-size: 1.5rem;
+  color: var(--color-cream);
+  opacity: 0.8;
+  margin-bottom: 2.5rem;
+}
+
+.focus-summary-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.focus-summary-entry {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--color-cream);
+  opacity: 0.7;
+}
