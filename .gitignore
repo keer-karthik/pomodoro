@@ -18,6 +18,10 @@ npm-debug.log*
 .vscode
 .idea
 
+# Claude
+.claude
+CLAUDE.md
+
 # OS
 .DS_Store
 Thumbs.db
